@@ -4,16 +4,33 @@
 # D:\python-3.6.5-embed-amd64\python.exe
 
 import os
+
 print (os.getcwd())
 print("/******************************/")
 print("git start 180330")
 
 
+from bs4 import BeautifulSoup
 from urllib.request import urlopen
-html = urlopen("https://www.bing.com/")
-print(html.read())
+from urllib.error import HTTPError
+    def getTitle(url):
+        try:
+            html = urlopen("http://www.rsks.czs.gov.cn/")
+        except HTTPError as e:
+        print(e)# return NUll
+        try:
+            bsObj = BeautifulSoup(html.read())
+            title = bsObj.body.h1
+        except attributeError as e:
+            return None
+        return title
 
 
+
+
+bsObj = BeautifulSoup(html.read())
+print(bsObj.head)
+print(bsObj.body)
 
 """
 class MyClass:
