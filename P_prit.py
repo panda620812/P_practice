@@ -4,45 +4,77 @@
 # D:\python-3.6.5-embed-amd64\python.exe
 
 import os
-
 print (os.getcwd())
 print("/******************************/")
 print("git start 180330")
 
-
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.error import HTTPError
-    def getTitle(url):
-        try:
-            html = urlopen("http://www.rsks.czs.gov.cn/")
-        except HTTPError as e:
-        print(e)# return NUll
-        try:
-            bsObj = BeautifulSoup(html.read())
-            title = bsObj.body.h1
-        except attributeError as e:
-            return None
-        return title
+# 模拟请求
+html = urlopen("http://www.pythonscraping.com/pages/warandpeace.html")
+bsObj = BeautifulSoup(html)
+nameList = bsObj.findAll("span",{"class":"green"})      # bsObj.findAll(tagName, tagAttributes)
+                                                        # findAll(tag, attributes, recursive, text, limit, keywords)
+                                                        #    find(tag, attributes, recursive, text, keywords)
+                                                        # recursive 是一个布尔变量，为 True， findAll 就会根据你的要求去查找标签参数的所有子标签，以及子标签的子标签。如果为 # # # False， findAll 就只查找文档的一级标签。默认值是 True
+for name in nameList:
+    print(name.get_text())#get_text() 会把你正在处理的 HTML 文档中所有的标签都清除，然后返回一个只包含文字的字符串。 
+    
+nameList = bsObj.findAll(text = "the prince")      # 查找前面网页中包含“the prince” 内容的标签数量 
+print ("\n",len(nameList))        
+
+# 
 
 
 
-
-bsObj = BeautifulSoup(html.read())
-print(bsObj.head)
-print(bsObj.body)
 
 """
+# Charpter 1
+# html.title Get
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
+from urllib.error import HTTPError
+def getTitle(url):
+    try:
+        html = urlopen(url)
+    except HTTPError as e:
+        print(e)    
+		#return NULL
+    try:
+        bsObj = BeautifulSoup(html.read(),"html.parser")       # bsObj = BeautifulSoup(html.read())
+        title = bsObj.title
+    except attributeError as e:
+        return None
+    return title
+urltest =  "http://www.rsks.czs.gov.cn/"   
+title = getTitle(str(urltest))
+if title == None:
+    print("Title could not be found")
+else:
+    print(title)
+"""   
+
+# bsObj = BeautifulSoup(html.read())
+# print(bsObj.head)
+# print(bsObj.body)
+
+
+
+#*******************************************************************************
+    #Base Exercise
+#*******************************************************************************
+"""
 class MyClass:
-	i = 12345
-	def f(self):
-		return "hello world"
+    i = 12345
+    def f(self):
+        return "hello world"
 
 x = MyClass() # Instantiate the class
 print("MyClass attribute i : ",x.i)
-print("MyClass method	 f : ",x.f())
+print("MyClass method    f : ",x.f())
 """
-# print("MyClass method	 f : ",x.f)	#<bound method MyClass.f of <__main__.MyClass object at 0x0000000002E67320>>
+# print("MyClass method  f : ",x.f) #<bound method MyClass.f of <__main__.MyClass object at 0x0000000002E67320>>
 
 ##############################################
 # f = open("test.txt", "w+", encoding="utf-8")
