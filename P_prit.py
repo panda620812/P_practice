@@ -6,6 +6,7 @@
 import os
 print (os.getcwd())
 print("/******************************/")
+print("git start 180330")
 
 
 from urllib.request import urlopen
